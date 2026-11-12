@@ -401,7 +401,10 @@ class ServerModel with ChangeNotifier {
         stopService();
       }
     } else {
-      if (isAndroid) {
+      // NORCO: attended support only. Do not ask for a log folder and a file-transfer folder
+      // (two Android folder pickers) before the first "Start service"; logs stay in the
+      // app's private folder and the "Transfer file" row can still set a folder up later.
+      if (isAndroid && !bind.isIncomingOnly()) {
         try {
           await AndroidDocuments.requireLogFolder();
           await showAndroidFileTransferSetup(gFFI);

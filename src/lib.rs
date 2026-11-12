@@ -50,6 +50,7 @@ mod clipboard;
 pub mod core_main;
 mod custom_server;
 mod lang;
+pub mod norco; // NORCO: build defaults, see NORCO.md
 #[cfg(not(any(target_os = "android", target_os = "ios")))]
 mod port_forward;
 mod port_forward_mux;

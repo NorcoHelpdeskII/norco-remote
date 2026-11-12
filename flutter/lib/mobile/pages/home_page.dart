@@ -26,6 +26,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   var _selectedIndex = 0;
+  // NORCO: the tab the app opens on and Back returns to ("Share screen" when incoming only).
+  var _homeIndex = 0;
   int get selectedIndex => _selectedIndex;
   final List<PageShape> _pages = [];
   int _chatPageTabIndex = -1;
@@ -43,6 +45,12 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initPages();
+    // NORCO: with the connect page hidden, start on "Share screen" instead of Chat.
+    final serverPageIndex = _pages.indexWhere((page) => page is ServerPage);
+    if (bind.isIncomingOnly() && serverPageIndex >= 0) {
+      _homeIndex = serverPageIndex;
+      _selectedIndex = serverPageIndex;
+    }
   }
 
   void initPages() {
@@ -63,9 +71,9 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          if (_selectedIndex != 0) {
+          if (_selectedIndex != _homeIndex) {
             setState(() {
-              _selectedIndex = 0;
+              _selectedIndex = _homeIndex;
             });
           } else {
             return true;

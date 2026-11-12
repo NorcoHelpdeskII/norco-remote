@@ -99,7 +99,9 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.carriez.flutter_hbb"
+        // NORCO: only the application ID changes. `namespace` and the Kotlin package stay
+        // `com.carriez.flutter_hbb` because the Rust JNI symbols are named after them.
+        applicationId "com.norco.remote"
         minSdkVersion 22
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
